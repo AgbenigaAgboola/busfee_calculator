@@ -5,7 +5,7 @@ import backgroundImage from "@/public/background.jpg";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24" style={{
+    <main className="flex min-h-screen flex-col items-center justify-center p-6" style={{
       // use the src property of the image object
       // backgroundImage: `url(${backgroundImage.src})`,
 

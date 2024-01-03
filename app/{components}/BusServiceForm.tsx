@@ -68,7 +68,7 @@ const BusServiceForm: React.FC<BusServiceFormProps> = () => {
 
         <div className='flex gap-3 justify-between'>
           <div className='flex flex-col gap-1 w-full'>
-            <label className='text-base font-semibold'>Number of Children:</label>
+            <label className='text-base font-semibold'>No of Pupil</label>
             <input
               type="number"
               value={numberOfChildren}
