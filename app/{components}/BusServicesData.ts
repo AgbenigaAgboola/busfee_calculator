@@ -48,7 +48,7 @@ const busServicesData: BusServicesData = {
     },
     {
       route_number: 3,
-      areas_covered: ["NAF VALLEY", "KPADUMA 1"],
+      areas_covered: ["NAF VALLEY"],
       round_trip_price: 173800,
       one_way_price: 153800,
     },
@@ -84,7 +84,7 @@ const busServicesData: BusServicesData = {
     },
     {
       route_number: 9,
-      areas_covered: ["GUZAPE"],
+      areas_covered: ["GUZAPE", "KPADUMA 1"],
       round_trip_price: 158000,
       one_way_price: 138000,
     },
