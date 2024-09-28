@@ -24,7 +24,7 @@ export default function Home() {
       <p className='text-2xl font-bold'>Bus Service Fee Calculator</p>
 
       <BusServiceForm />
-      <p className='text-xs font-bold mt-4'>
+      <p className='mt-4 text-xs font-bold'>
         Designed and coded by 
         <a href="https://agboola-portfolio.vercel.app/" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
           Agboola
