@@ -21,96 +21,122 @@ interface BusServicesData {
 const busServicesData: BusServicesData = {
   bus_routes: [
     {
-      route_number: 1,
-      areas_covered: [
-        "GARKI",
-        "CBN",
+      "route_number": 1,
+      "areas_covered": [
+        "GWARIMPA",
+        "CITEC/JABI",
+        "LIFECAMP"
+      ],
+      "round_trip_price": 355500,
+      "one_way_price": 325500
+    },
+    {
+      "route_number": 2,
+      "areas_covered": [
+        "LOKOGOMA",
+        "SUNNY VILLE"
+      ],
+      "round_trip_price": 355500,
+      "one_way_price": 325500
+    },
+    {
+      "route_number": 3,
+      "areas_covered": [
+        "GAMES VILLAGE",
+        "WONDERLAND",
+        "SUNCITY"
+      ],
+      "round_trip_price": 331800,
+      "one_way_price": 301800
+    },
+    {
+      "route_number": 4,
+      "areas_covered": [
+        "APO ZONE E",
+        "APO RESETTLEMENT",
+        "APO NEPA"
+      ],
+      "round_trip_price": 308100,
+      "one_way_price": 278100
+    },
+    {
+      "route_number": 5,
+      "areas_covered": [
+        "WUYE",
+        "ZONE E"
+      ],
+      "round_trip_price": 308100,
+      "one_way_price": 278100
+    },
+    {
+      "route_number": 6,
+      "areas_covered": [
+        "GADUWA",
+        "PRINCE & PRINCESS"
+      ],
+      "round_trip_price": 284400,
+      "one_way_price": 254400
+    },
+    {
+      "route_number": 7,
+      "areas_covered": [
         "MAITAMA",
         "WUSE 2",
-        "ZONE E",
         "BERGER",
-        "WUYE",
+        "GARKI",
+        "CBN",
+        "AREA 1"
       ],
-      round_trip_price: 189600,
-      one_way_price: 169600,
+      "round_trip_price": 284400,
+      "one_way_price": 254400
     },
     {
-      route_number: 2,
-      areas_covered: [
-        "GAMES VILLAGE",
-        "AREA 1",
-        "PRINCE & PRINCESS",
-        "WONDERLAND",
-        "SUNCITY",
+      "route_number": 8,
+      "areas_covered": [
+        "NAF VALLEY",
+        "MAMBILLA BARRACKS"
       ],
-      round_trip_price: 221200,
-      one_way_price: 201200,
+      "round_trip_price": 260700,
+      "one_way_price": 230700
     },
     {
-      route_number: 3,
-      areas_covered: ["NAF VALLEY"],
-      round_trip_price: 173800,
-      one_way_price: 153800,
+      "route_number": 9,
+      "areas_covered": [
+        "ASOKORO 1",
+        "GUZAPE"
+      ],
+      "round_trip_price": 237000,
+      "one_way_price": 207000
     },
     {
-      route_number: 4,
-      areas_covered: ["GWARIMPA", "CITEC/JABI", "LIFECAMP"],
-      round_trip_price: 237000,
-      one_way_price: 217000,
-    },
-    {
-      route_number: 5,
-      areas_covered: ["GADUWA", "GUDU", "KABUSA"],
-      round_trip_price: 189600,
-      one_way_price: 169600,
-    },
-    {
-      route_number: 6,
-      areas_covered: ["APO ZONE E", "APO RESETTLEMENT", "APO NEPA"],
-      round_trip_price: 205400,
-      one_way_price: 185400,
-    },
-    {
-      route_number: 7,
-      areas_covered: ["SUNNY VILLE"],
-      round_trip_price: 237000,
-      one_way_price: 217000,
-    },
-    {
-      route_number: 8,
-      areas_covered: ["LOKOGOMA"],
-      round_trip_price: 237000,
-      one_way_price: 217000,
-    },
-    {
-      route_number: 9,
-      areas_covered: ["GUZAPE", "KPADUMA 1"],
-      round_trip_price: 158000,
-      one_way_price: 138000,
-    },
-    {
-      route_number: 10,
-      areas_covered: ["MAMBILLA BARRACKS"],
-      round_trip_price: 173800,
-      one_way_price: 153800,
-    },
+      "route_number": 10,
+      "areas_covered": [
+        "School Environs",
+        "T.Y Danjuma",
+        "Linda Chalker",
+        "IOM",
+        "KPADUMA 1"
+      ],
+      "round_trip_price": 213300,
+      "one_way_price": 183300
+    }
   ], // Your bus routes data
   discount: {
     "2_children": {
-      round_trip_discount: 50000,
-      one_way_discount: 30000,
+      round_trip_discount: 60000,
+      one_way_discount: 40000,
     },
     "3_children": {
-      round_trip_discount: 80000,
-      one_way_discount: 50000,
+      round_trip_discount: 90000,
+      one_way_discount: 60000,
     },
     "4_children": {
-      round_trip_discount: 120000,
-      one_way_discount: 80000,
+      round_trip_discount: 130000,
+      one_way_discount: 90000,
     },
     "5_children": {
-      round_trip_discount: 150000,
-      one_way_discount: 150000,
+      round_trip_discount: 160000,
+      one_way_discount: 130000,
     },
   }, // Your discount data
 } as BusServicesData;
