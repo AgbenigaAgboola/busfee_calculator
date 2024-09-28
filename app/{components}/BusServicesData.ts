@@ -44,7 +44,8 @@ const busServicesData: BusServicesData = {
       "areas_covered": [
         "GAMES VILLAGE",
         "WONDERLAND",
-        "SUNCITY"
+        "SUNCITY",
+        "GALADIMAWA"
       ],
       "round_trip_price": 331800,
       "one_way_price": 301800
