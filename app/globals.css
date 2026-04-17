@@ -72,5 +72,79 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Nunito', sans-serif;
+    background-color: #f8fafc;
+    background-image:
+      radial-gradient(circle at 50% -20%, #f0fdf4 0%, transparent 100%),
+      linear-gradient(to right, rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+    background-size: 100% 100%, 32px 32px, 32px 32px;
+    background-attachment: fixed;
   }
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+}
+
+.select-open .select-icon {
+  transform: rotate(180deg);
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatBusBg1 {
+  0%, 100% {
+    transform: translateY(0) rotate(-3deg);
+    color: #10b981;
+  }
+  50% {
+    transform: translateY(-70px) rotate(1deg);
+    color: #0ea5e9;
+  }
+}
+
+@keyframes floatBusBg2 {
+  0%, 100% {
+    transform: translateY(0) rotate(2deg);
+    color: #059669;
+  }
+  50% {
+    transform: translateY(-50px) rotate(-2deg);
+    color: #14b8a6;
+  }
+}
+
+.animate-bg-bus-1 {
+  animation: floatBusBg1 8s ease-in-out infinite;
+}
+
+.animate-bg-bus-2 {
+  animation: floatBusBg2 10s ease-in-out infinite reverse;
 }

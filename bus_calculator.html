@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bus Service Fee Calculator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600&display=swap');
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: #f8fafc;
+      background-image:
+        radial-gradient(circle at 50% -20%, #f0fdf4 0%, transparent 100%),
+        linear-gradient(to right, rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 32px 32px, 32px 32px;
+      background-attachment: fixed;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+      background: #94a3b8;
+    }
+
+    .select-open .select-icon {
+      transform: rotate(180deg);
+    }
+
+    .fade-in {
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Perpetual Background Animations with Soft Color Transitions */
+    @keyframes floatBusBg1 {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(-3deg);
+        color: #10b981;
+      }
+
+      /* emerald-500 */
+      50% {
+        transform: translateY(-70px) rotate(1deg);
+        color: #0ea5e9;
+      }
+
+      /* sky-500 */
+    }
+
+    @keyframes floatBusBg2 {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(2deg);
+        color: #059669;
+      }
+
+      /* emerald-600 */
+      50% {
+        transform: translateY(-50px) rotate(-2deg);
+        color: #14b8a6;
+      }
+
+      /* teal-500 */
+    }
+
+    .animate-bg-bus-1 {
+      animation: floatBusBg1 8s ease-in-out infinite;
+    }
+
+    .animate-bg-bus-2 {
+      animation: floatBusBg2 10s ease-in-out infinite reverse;
+    }
+  </style>
+</head>
+
+<body
+  class="flex flex-col items-center justify-center min-h-screen p-4 sm:p-6 text-slate-800 antialiased selection:bg-emerald-100 selection:text-emerald-900 relative z-0">
+
+  <!-- Animated Background Elements -->
+  <div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden flex items-center justify-center">
+    <!-- Bottom Right Bus -->
+    <div class="absolute bottom-[-15%] right-[-15%] sm:right-[-5%] animate-bg-bus-1 opacity-[0.15] drop-shadow-2xl">
+      <iconify-icon icon="solar:bus-linear" style="stroke-width: 1.5;"
+        class="text-[35rem] sm:text-[50rem]"></iconify-icon>
+    </div>
+    <!-- Top Left Bus -->
+    <div class="absolute top-[5%] left-[-20%] sm:left-[-5%] animate-bg-bus-2 opacity-[0.08] drop-shadow-xl">
+      <div class="scale-x-[-1]">
+        <iconify-icon icon="solar:bus-linear" style="stroke-width: 1.5;"
+          class="text-[25rem] sm:text-[40rem]"></iconify-icon>
+      </div>
+    </div>
+  </div>
+
+  <main
+    class="w-full max-w-md bg-white/80 backdrop-blur-xl rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-900/5 p-6 sm:p-8 relative overflow-visible">
+
+    <!-- Logo & Header -->
+    <div class="flex items-center justify-between mb-8">
+      <div
+        class="text-base font-semibold tracking-tighter text-emerald-500 bg-emerald-50 px-3 py-1 rounded-xl ring-1 ring-emerald-500/20">
+        AFRICA COMMUNITY SCHOOL
+      </div>
+      <div
+        class="flex items-center justify-center w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-500 ring-1 ring-emerald-500/20">
+        <iconify-icon icon="solar:bus-linear" style="stroke-width: 1.5;" class="text-xl"></iconify-icon>
+      </div>
+    </div>
+
+    <div class="mb-8">
+      <h1 class="text-2xl font-semibold tracking-tight text-slate-800 mb-1">Bus fare calculator</h1>
+      <p class="text-sm text-slate-500 font-medium">Find the right plan for your children's commute.</p>
+    </div>
+
+    <form id="calculator-form" class="flex flex-col gap-6 w-full">
+
+      <!-- Custom Route Dropdown -->
+      <div class="flex flex-col gap-2 relative" id="route-container">
+        <label class="text-sm font-semibold text-slate-700 flex items-center gap-2">
+          <iconify-icon icon="solar:routing-2-linear" style="stroke-width: 1.5;" class="text-slate-400"></iconify-icon>
+          Where do you live?
+        </label>
+        <button type="button" id="route-trigger"
+          class="w-full h-14 px-4 bg-slate-50 hover:bg-slate-100 transition-colors rounded-2xl ring-1 ring-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 flex items-center justify-between group">
+          <span id="route-display" class="text-sm font-medium text-slate-400 truncate pr-4">Select a route...</span>
+          <iconify-icon icon="solar:alt-arrow-down-linear" style="stroke-width: 1.5;"
+            class="select-icon text-slate-400 transition-transform duration-200 flex-shrink-0"></iconify-icon>
+        </button>
+
+        <!-- Dropdown List -->
+        <div id="route-dropdown"
+          class="absolute top-[calc(100%+8px)] left-0 w-full bg-white ring-1 ring-slate-200 rounded-2xl shadow-xl z-20 hidden flex-col overflow-hidden">
+          <div class="max-h-64 overflow-y-auto custom-scrollbar p-2 flex flex-col gap-1" id="route-list">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- Pupils Counter -->
+        <div class="flex flex-col gap-2">
+          <label class="text-sm font-semibold text-slate-700 flex items-center gap-2">
+            <iconify-icon icon="solar:users-group-rounded-linear" style="stroke-width: 1.5;"
+              class="text-slate-400"></iconify-icon>
+            Children
+          </label>
+          <div class="h-14 flex items-center justify-between p-1 ring-1 ring-slate-200 rounded-2xl bg-slate-50">
+            <button type="button" id="btn-dec"
+              class="w-10 h-10 flex items-center justify-center rounded-xl text-slate-500 hover:bg-white hover:text-slate-800 hover:shadow-sm transition-all focus:outline-none disabled:opacity-30 disabled:hover:bg-transparent">
+              <iconify-icon icon="solar:minus-linear" style="stroke-width: 1.5;" class="text-base"></iconify-icon>
+            </button>
+            <span id="pupils-display" class="text-base font-semibold w-8 text-center text-slate-800">1</span>
+            <button type="button" id="btn-inc"
+              class="w-10 h-10 flex items-center justify-center rounded-xl text-slate-500 hover:bg-white hover:text-slate-800 hover:shadow-sm transition-all focus:outline-none">
+              <iconify-icon icon="solar:add-linear" style="stroke-width: 1.5;" class="text-base"></iconify-icon>
+            </button>
+          </div>
+        </div>
+
+        <!-- Custom Trip Type Toggle -->
+        <div class="flex flex-col gap-2">
+          <label class="text-sm font-semibold text-slate-700 flex items-center gap-2">
+            <iconify-icon icon="solar:transfer-horizontal-linear" style="stroke-width: 1.5;"
+              class="text-slate-400"></iconify-icon>
+            Trip type
+          </label>
+          <div class="h-14 flex p-1 bg-slate-50 rounded-2xl ring-1 ring-slate-200 relative">
+            <div id="tab-indicator"
+              class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-xl shadow-[0_2px_8px_rgb(0,0,0,0.08)] ring-1 ring-slate-900/5 transition-transform duration-300 ease-out pointer-events-none">
+            </div>
+            <button type="button" data-value="roundTrip"
+              class="trip-tab flex-1 flex items-center justify-center text-sm font-medium z-10 transition-colors text-slate-800 focus:outline-none rounded-xl">
+              Round Trip
+            </button>
+            <button type="button" data-value="oneWay"
+              class="trip-tab flex-1 flex items-center justify-center text-sm font-medium z-10 transition-colors text-slate-500 hover:text-slate-700 focus:outline-none rounded-xl">
+              One Way
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit"
+        class="mt-2 w-full h-14 flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] text-white rounded-2xl text-base font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500/50 shadow-[0_4px_14px_0_rgb(16,185,129,0.39)]">
+        Calculate fare
+        <iconify-icon icon="solar:arrow-right-linear" style="stroke-width: 1.5;" class="text-lg"></iconify-icon>
+      </button>
+    </form>
+
+    <!-- Results Display -->
+    <div id="result-container"
+      class="hidden mt-6 overflow-hidden rounded-2xl bg-emerald-50 ring-1 ring-emerald-500/20 p-5 fade-in">
+      <div class="flex flex-col gap-1">
+        <p class="text-xs font-semibold text-emerald-600 uppercase tracking-widest">Estimated Total</p>
+        <div class="flex items-baseline gap-1">
+          <span class="text-lg font-medium text-emerald-700">₦</span>
+          <span id="total-fees" class="text-3xl font-semibold tracking-tight text-emerald-900">0</span>
+        </div>
+        <p id="discount-notice" class="text-xs font-medium text-emerald-600/80 mt-1 hidden">
+          Includes sibling discount
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <p class="mt-8 text-xs font-medium text-slate-400 relative z-10">
+    Designed & coded by
+    <a href="https://agboola-portfolio.vercel.app/" class="text-slate-500 hover:text-emerald-500 transition-colors"
+      target="_blank" rel="noopener noreferrer">Agboola</a>
+  </p>
+
+  <script>
+    const busServicesData = {
+      bus_routes: [
+        { route_number: 1, areas_covered: ["GWARIMPA", "CITEC/JABI", "LIFECAMP"], round_trip_price: 462150, one_way_price: 432150 },
+        { route_number: 2, areas_covered: ["LOKOGOMA", "SUNNY VILLE"], round_trip_price: 462150, one_way_price: 432150 },
+        { route_number: 3, areas_covered: ["GAMES VILLAGE", "WONDERLAND", "SUNCITY", "GALADIMAWA"], round_trip_price: 431340, one_way_price: 401340 },
+        { route_number: 4, areas_covered: ["APO ZONE E", "APO RESETTLEMENT", "APO NEPA"], round_trip_price: 400530, one_way_price: 370530 },
+        { route_number: 5, areas_covered: ["WUYE", "ZONE E"], round_trip_price: 400530, one_way_price: 370530 },
+        { route_number: 6, areas_covered: ["GADUWA", "PRINCE & PRINCESS"], round_trip_price: 369720, one_way_price: 339720 },
+        { route_number: 7, areas_covered: ["MAITAMA", "WUSE 2", "BERGER", "GARKI", "CBN", "AREA 1", "ASO VILLA"], round_trip_price: 369720, one_way_price: 339720 },
+        { route_number: 8, areas_covered: ["NAF VALLEY", "MAMBILLA BARRACKS", "ASOKORO 2"], round_trip_price: 338910, one_way_price: 308910 },
+        { route_number: 9, areas_covered: ["ASOKORO 1", "GUZAPE"], round_trip_price: 308100, one_way_price: 278100 },
+        { route_number: 10, areas_covered: ["School Environs", "T.Y Danjuma", "Linda Chalker", "IOM", "KPADUMA 1"], round_trip_price: 277290, one_way_price: 247290 }
+      ],
+      discount: {
+        "2_children": { round_trip_discount: 70000, one_way_discount: 50000 },
+        "3_children": { round_trip_discount: 100000, one_way_discount: 70000 },
+        "4_children": { round_trip_discount: 140000, one_way_discount: 100000 },
+        "5_children": { round_trip_discount: 170000, one_way_discount: 140000 }
+      }
+    };
+
+    // State
+    let state = {
+      route: null,
+      pupils: 1,
+      tripType: 'roundTrip'
+    };
+
+    // DOM Elements
+    const routeTrigger = document.getElementById('route-trigger');
+    const routeDisplay = document.getElementById('route-display');
+    const routeDropdown = document.getElementById('route-dropdown');
+    const routeList = document.getElementById('route-list');
+    const routeContainer = document.getElementById('route-container');
+
+    const btnDec = document.getElementById('btn-dec');
+    const btnInc = document.getElementById('btn-inc');
+    const pupilsDisplay = document.getElementById('pupils-display');
+
+    const tripTabs = document.querySelectorAll('.trip-tab');
+    const tabIndicator = document.getElementById('tab-indicator');
+
+    const form = document.getElementById('calculator-form');
+    const resultContainer = document.getElementById('result-container');
+    const totalFeesEl = document.getElementById('total-fees');
+    const discountNotice = document.getElementById('discount-notice');
+
+    // Initialize Route Dropdown
+    busServicesData.bus_routes.forEach(route => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'w-full text-left px-3 py-3 rounded-xl hover:bg-slate-50 transition-colors flex flex-col gap-1 focus:outline-none focus:bg-slate-50';
+      btn.innerHTML = `
+                <span class="text-sm font-semibold text-slate-800">Route ${route.route_number}</span>
+                <span class="text-xs font-medium text-slate-500 truncate w-full">${route.areas_covered.join(', ')}</span>
+            `;
+
+      btn.addEventListener('click', () => {
+        state.route = route.route_number;
+        routeDisplay.textContent = `Route ${route.route_number} (${route.areas_covered[0]}${route.areas_covered.length > 1 ? '...' : ''})`;
+        routeDisplay.classList.remove('text-slate-400');
+        routeDisplay.classList.add('text-slate-800');
+        closeRouteDropdown();
+        hideResult();
+      });
+
+      routeList.appendChild(btn);
+    });
+
+    // Route Dropdown Logic
+    function toggleRouteDropdown() {
+      const isOpen = !routeDropdown.classList.contains('hidden');
+      if (isOpen) {
+        closeRouteDropdown();
+      } else {
+        routeDropdown.classList.remove('hidden');
+        routeTrigger.classList.add('select-open', 'ring-emerald-500/50');
+      }
+    }
+
+    function closeRouteDropdown() {
+      routeDropdown.classList.add('hidden');
+      routeTrigger.classList.remove('select-open', 'ring-emerald-500/50');
+    }
+
+    routeTrigger.addEventListener('click', toggleRouteDropdown);
+
+    document.addEventListener('click', (e) => {
+      if (!routeContainer.contains(e.target)) {
+        closeRouteDropdown();
+      }
+    });
+
+    // Pupils Logic
+    function updatePupilsUI() {
+      pupilsDisplay.textContent = state.pupils;
+      btnDec.disabled = state.pupils <= 1;
+      hideResult();
+    }
+
+    btnDec.addEventListener('click', () => {
+      if (state.pupils > 1) {
+        state.pupils--;
+        updatePupilsUI();
+      }
+    });
+
+    btnInc.addEventListener('click', () => {
+      state.pupils++;
+      updatePupilsUI();
+    });
+
+    updatePupilsUI();
+
+    // Trip Type Logic
+    tripTabs.forEach(tab => {
+      tab.addEventListener('click', (e) => {
+        const val = e.target.dataset.value;
+        state.tripType = val;
+
+        // Update styling
+        tripTabs.forEach(t => {
+          t.classList.remove('text-slate-800');
+          t.classList.add('text-slate-500');
+        });
+        e.target.classList.remove('text-slate-500');
+        e.target.classList.add('text-slate-800');
+
+        // Move indicator
+        if (val === 'oneWay') {
+          tabIndicator.style.transform = 'translateX(100%)';
+        } else {
+          tabIndicator.style.transform = 'translateX(0)';
+        }
+
+        hideResult();
+      });
+    });
+
+    function hideResult() {
+      resultContainer.classList.add('hidden');
+      resultContainer.classList.remove('fade-in');
+    }
+
+    // Calculation Logic
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      if (!state.route) {
+        routeTrigger.classList.add('ring-red-400');
+        setTimeout(() => routeTrigger.classList.remove('ring-red-400'), 500);
+        return;
+      }
+
+      const route = busServicesData.bus_routes.find(r => r.route_number === state.route);
+      if (!route) return;
+
+      let baseFee = state.tripType === 'roundTrip' ? route.round_trip_price : route.one_way_price;
+      let totalFees = baseFee * state.pupils;
+      let appliedDiscount = false;
+
+      const discountKey = `${state.pupils}_children`;
+      if (busServicesData.discount.hasOwnProperty(discountKey)) {
+        const discount = busServicesData.discount[discountKey];
+        totalFees -= (state.tripType === 'roundTrip') ? discount.round_trip_discount : discount.one_way_discount;
+        appliedDiscount = true;
+      }
+
+      // Animate number (simple fast counter effect)
+      totalFeesEl.textContent = '...';
+      discountNotice.classList.add('hidden');
+      resultContainer.classList.remove('hidden');
+
+      // Re-trigger animation
+      resultContainer.classList.remove('fade-in');
+      void resultContainer.offsetWidth;
+      resultContainer.classList.add('fade-in');
+
+      setTimeout(() => {
+        totalFeesEl.textContent = totalFees.toLocaleString('en-NG');
+        if (appliedDiscount) {
+          discountNotice.classList.remove('hidden');
+        }
+      }, 150);
+    });
+  </script>
+</body>
+
+</html>
